@@ -137,5 +137,5 @@ LOGOUT_URL = '/logout/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  #django deffault based on username
-    'social.authentication.PhonrAuthBackend',  #base on phone(check after username)
+    'social.authentication.PhoneAuthBackend',  #base on phone(check after username)
 ]
