@@ -131,3 +131,11 @@ AUTH_USER_MODEL =  'social.User'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+
+
+#Authentication
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  #django deffault based on username
+    'social.authentication.PhonrAuthBackend',  #base on phone(check after username)
+]
