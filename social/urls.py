@@ -21,5 +21,5 @@ urlpatterns = [
     path('edit/', views.edit_user, name="edit_user"),
 
     #Ticket
-    # path('profile/ticket', views.ticket, name="ticket"),
+    path('profile/ticket', views.ticket, name="ticket"),
 ]
