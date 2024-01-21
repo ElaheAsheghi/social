@@ -139,3 +139,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  #django deffault based on username
     'social.authentication.PhoneAuthBackend',  #base on phone(check after username)
 ]
+
+
+#SMTP Settings
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'socialwebproject2024@gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = 'lhht ajla zhco yede'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

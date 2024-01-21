@@ -55,14 +55,15 @@ def edit_user(request):
 
 #Ticket
 def ticket(request):
+    sent = False
     if request.method == "POST":
-        sent = False
         form = TicketForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             message = f"{cd['name']}\n{cd['email']}\n{cd['phone']}\n\n{cd['message']}"
-            send_mail(cd['subject'], message, '', [''], fail_silently=False)
-            sent= True
+            send_mail(cd['subject'], message,\
+                       'socialwebproject2024@gmail.com', ['asheghielahe@gmail.com'], fail_silently=False)
+            sent = True
             return redirect("social:profile")
     else:
         form = TicketForm()
