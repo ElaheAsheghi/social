@@ -22,4 +22,22 @@ urlpatterns = [
 
     #Ticket
     path('profile/ticket', views.ticket, name="ticket"),
+
+    #Change Password
+    path('password-change/', auth_views.PasswordChangeView.as_view(success_url='done/'), name= "password_change"),
+    
+    path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(), name= "password_change_done"),
+
+    #Reset Password
+    path('password-reset/', auth_views.PasswordResetView.as_view(success_url='done/'), name= "password_reset"),
+
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(), name= "password_reset_done"),
+    
+    path('password-reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(\
+        success_url='/password-reset/complete/'), name="password_reset_confirm"),
+    
+    path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(),\
+        name="password_reset_complete"),
+
+    #
 ]

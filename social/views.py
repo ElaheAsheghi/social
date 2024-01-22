@@ -64,7 +64,7 @@ def ticket(request):
             send_mail(cd['subject'], message,\
                        'socialwebproject2024@gmail.com', ['asheghielahe@gmail.com'], fail_silently=False)
             sent = True
-            return redirect("social:profile")
+            # return redirect("social:profile")
     else:
         form = TicketForm()
     return render(request, "forms/ticket.html", {'form':form, 'sent':sent})

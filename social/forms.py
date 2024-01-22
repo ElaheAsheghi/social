@@ -36,13 +36,13 @@ class UserRegisterForm(forms.ModelForm):
     
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if User.objects.filter(phone = phone).exist():
+        if User.objects.filter(phone = phone).exists():
             raise forms.ValidationError("با این شماره اکانت دیگری وجود دارد")
         return phone
     
     def clean_user(self):
         username = self.cleaned_data['username']
-        if User.objects.filter(username = username).exist():
+        if User.objects.filter(username = username).exists():
             raise forms.ValidationError("اکانت دیگری با این نام کاربری وجود دارد")
         return username
     
@@ -56,13 +56,13 @@ class UserEditForm(forms.ModelForm):
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
-        if User.objects.exclude(id = self.instance.id).filter(phone = phone).exist():
+        if User.objects.exclude(id = self.instance.id).filter(phone = phone).exists():
             raise forms.ValidationError("اکانت دیگری با این شماره وجود دارد")
         return phone
     
     def clean_user(self):
         username = self.cleaned_data['username']
-        if User.objects.exclude(id = self.instace.id).filter(username = username).exist():
+        if User.objects.exclude(id = self.instace.id).filter(username = username).exists():
             raise forms.ValidationError("اکانت دیگری با این نام کاربری وجود دارد")
         return username
     
