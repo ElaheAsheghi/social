@@ -47,4 +47,7 @@ urlpatterns = [
 
     #Create Post
     path('posts/create_post', views.create_post, name="create_post"),
+
+    #Post Detail
+    path('posts/detail/<post_id>', views.post_detail, name="post_detail"),
 ]

@@ -4,6 +4,7 @@
     </h2>
 {% endif %}
 {% for post in posts %}
+    <a href="{{ post.get_absolute_url }}">
     {{ post.author }}
     {{ post.description|truncatewords:20|linebreaks }}
     {{ post.created }}
@@ -13,4 +14,5 @@
         </a>
     {% if not forloop.last %}, {% endif %}
     {% endfor %}
+    </a>
 {% endfor %}

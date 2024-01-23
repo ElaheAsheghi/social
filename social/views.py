@@ -108,3 +108,12 @@ def create_post(request):
     else:
         form = CreatePostForm()
     return render(request, 'forms/create_post.html', {'form':form})
+
+
+#Post Detail
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    context = {
+        'post':post,
+    }
+    return render(request, "social/detail.html", context)
