@@ -10,3 +10,16 @@
         </a>
     {% if not forloop.last %}, {% endif %}
 {% endfor %}
+
+<h2>
+    Similar Posts
+</h2>
+{% for post in similar_post %}
+    <p>
+        <a href="{{ post.get_absolute_url }}">
+            {{ post.description|truncatewords:10}}
+        </a>
+    </p>
+{% empty %}
+    There are no similar posts.
+{% endfor %}
