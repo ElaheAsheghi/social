@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from taggit.models import Tag
 from django.core.mail import send_mail
 from django.contrib.auth import views
 from .forms import *
@@ -64,7 +66,45 @@ def ticket(request):
             send_mail(cd['subject'], message,\
                        'socialwebproject2024@gmail.com', ['asheghielahe@gmail.com'], fail_silently=False)
             sent = True
-            # return redirect("social:profile")
     else:
         form = TicketForm()
     return render(request, "forms/ticket.html", {'form':form, 'sent':sent})
+
+
+#Post List
+def post_list(request, tag_slug=None):
+    posts = Post.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = Post.objects.filter(tags__in=[tag])
+    #Paginator
+    paginator = Paginator(posts,3)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except EmptyPage:
+        posts = Paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    context = {
+        'posts':posts,
+        'tag':tag,
+    }
+    return render(request, "social/list.html", context)
+
+
+#Create Post
+@login_required
+def create_post(request):
+    if request.method == "POST":
+        form = CreatePostForm(data=request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+            return redirect('social:profile')
+    else:
+        form = CreatePostForm()
+    return render(request, 'forms/create_post.html', {'form':form})

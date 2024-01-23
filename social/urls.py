@@ -21,7 +21,7 @@ urlpatterns = [
     path('edit/', views.edit_user, name="edit_user"),
 
     #Ticket
-    path('profile/ticket', views.ticket, name="ticket"),
+    path('ticket', views.ticket, name="ticket"),
 
     #Change Password
     path('password-change/', auth_views.PasswordChangeView.as_view(success_url='done/'), name= "password_change"),
@@ -39,5 +39,12 @@ urlpatterns = [
     path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(),\
         name="password_reset_complete"),
 
-    #
+    #post list
+    path('posts/', views.post_list, name="post_list"),
+
+    #post list with tag
+    path('posts/<tag_slug>/', views.post_list, name="post_list_by_tag"),
+
+    #Create Post
+    path('posts/create_post', views.create_post, name="create_post"),
 ]

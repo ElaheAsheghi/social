@@ -92,3 +92,19 @@ class TicketForm(forms.Form):
                 raise forms.ValidationError("مقدار وارد شده عددی نیست")
             else:
                 return phone
+            
+
+#PostForm
+class CreatePostForm(forms.ModelForm):
+   
+    class Meta:
+        model = Post
+        fields = ['description', 'tags']
+
+    def clean_description(self):
+        description = self.cleaned_data['description']
+        if description:
+            if 100 <= len(description) or len(description)<= 2:
+                raise forms.ValidationError("تعداد کاراکتر وارد شده برای متن پست مجاز نیست")
+            else:
+                return description
