@@ -50,4 +50,7 @@ urlpatterns = [
 
     #Post Detail
     path('posts/detail/<pk>', views.post_detail, name="post_detail"),
+
+    #Seardh
+    path('search/', views.search, name='search'),
 ]

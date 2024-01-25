@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from taggit.models import Tag
 from django.core.mail import send_mail
+from django.contrib.postgres.search import TrigramSimilarity
 from django.contrib.auth import views
 from django.db.models import Count
 from .forms import *
@@ -122,3 +123,22 @@ def post_detail(request, pk):
         'similar_post':similar_post,
     }
     return render(request, "social/detail.html", context)
+
+
+#Search
+def search(request):
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(data=request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results1 = Post.objects.annotate(similarity=TrigramSimilarity('description', query)).filter(similarity__gt=0.1)
+            results2 = Post.objects.annotate(similarity=TrigramSimilarity('tags', query)).filter(similarity__gt=0.1)
+            posts = (results1 | results2).order_by('similarity')
+            results = list(posts)
+        context = {
+            'query':query,
+            'results':results,
+        }
+        return render(request, 'social/search.html', context)

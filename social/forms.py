@@ -108,3 +108,9 @@ class CreatePostForm(forms.ModelForm):
                 raise forms.ValidationError("تعداد کاراکتر وارد شده برای متن پست مجاز نیست")
             else:
                 return description
+            
+
+#SearchForm
+class SearchForm(forms.Form):
+
+    query = forms.CharField()

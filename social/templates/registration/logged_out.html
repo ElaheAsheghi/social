@@ -1,6 +1,10 @@
-<h1>
-    خارج شدید
-</h1>
-<a href="{% url 'social:login' %}">
-    ورود مجدد
-</a>
+{% extends 'parent/base.html' %}
+{% block title %}logout{% endblock %}
+{% block content %}
+    <h1>
+        خارج شدید
+    </h1>
+    <a href="{% url 'social:login' %}">
+        ورود مجدد
+    </a>
+{% endblock %}

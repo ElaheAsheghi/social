@@ -1,10 +1,14 @@
-{% if sent %}
-    <h1>
-        ایمیل شما به پشتیبانی ارسال شد
-    </h1>
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit", values="ثبت تیکت">
-</form>
+{% extends 'parent/base.html' %}
+{% block title %}ticket{% endblock %}
+{% block content %}
+    {% if sent %}
+        <h1>
+            ایمیل شما به پشتیبانی ارسال شد
+        </h1>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit", values="ثبت تیکت">
+    </form>
+{% endblock %}

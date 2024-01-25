@@ -1,9 +1,13 @@
-<h1>
-    {{ user }} عزیز
-</h1>
-<p>
-    ثبت نام شما با موفقیت انجام شد
-</p>
-    <a href="{% url 'social:profile' %}">
-        ورود به وبسایت
-    </a>
+{% extends 'parent/base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}  
+    <h1>
+        {{ user }} عزیز
+    </h1>
+    <p>
+        ثبت نام شما با موفقیت انجام شد
+    </p>
+        <a href="{% url 'social:profile' %}">
+            ورود به وبسایت
+        </a>
+{% endblock %}
