@@ -134,11 +134,14 @@ def search(request):
         if form.is_valid():
             query = form.cleaned_data['query']
             results1 = Post.objects.annotate(similarity=TrigramSimilarity('description', query)).filter(similarity__gt=0.1)
-            results2 = Post.objects.annotate(similarity=TrigramSimilarity('tags', query)).filter(similarity__gt=0.1)
-            posts = (results1 | results2).order_by('similarity')
-            results = list(posts)
+            results2 = Post.objects.annotate(similarity=TrigramSimilarity('tags__name', query)).filter(similarity__gt=0.1)
+            results = (results1 | results2).order_by('similarity')
         context = {
             'query':query,
             'results':results,
         }
+        print(type(Post.tags))
+        print(type(Post.description))
+        print(type(Post.tagged_items))
+
         return render(request, 'social/search.html', context)
