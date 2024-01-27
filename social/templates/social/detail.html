@@ -13,7 +13,25 @@
             </a>
         {% if not forloop.last %}, {% endif %}
     {% endfor %}
-
+    <hr>
+    <h2>
+        Comments
+    </h2>
+    <div>
+        {% for cm in comments %}
+            {{cm.name}}
+            {{cm.body|linebreaks}}
+            <br>
+        {% empty %}
+        There is no comment!
+        {% endfor %}
+    </div>
+    <form action="{% url 'social:post_comment' post.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="add comment">
+    </form>
+    <hr>
     <h2>
         Similar Posts
     </h2>

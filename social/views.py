@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .forms import *
+from .models import *
 from django.http import HttpResponse, Http404,HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -8,8 +10,8 @@ from django.core.mail import send_mail
 from django.contrib.postgres.search import TrigramSimilarity
 from django.contrib.auth import views
 from django.db.models import Count
-from .forms import *
-from .models import *
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -118,9 +120,13 @@ def post_detail(request, pk):
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_post = Post.objects.filter(tags__in=post_tags_ids).exclude(id=post.id)
     similar_post = similar_post.annotate(same_tags=Count('tags')).order_by('-same_tags', '-created')[:2]
+    comments = post.comments.all()
+    form = CommentForm()
     context = {
         'post':post,
         'similar_post':similar_post,
+        'comments':comments,
+        'form':form,
     }
     return render(request, "social/detail.html", context)
 
@@ -145,3 +151,27 @@ def search(request):
         print(type(Post.tagged_items))
 
         return render(request, 'social/search.html', context)
+    
+
+#Comment
+# @login_required(next='blog:post_detail')
+@require_POST
+def post_comment(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    comment = None
+    if request.method == 'POST':
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.name = request.user
+            comment.save()
+    else:
+        form = CommentForm()
+    comments = post.comments.all()
+    context = {
+        'post':post,
+        'form':form,
+        'comments':comments,
+    }
+    return render(request, "forms/comment.html", context)

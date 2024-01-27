@@ -1,0 +1,23 @@
+{% extends 'parent/base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+
+{% for cm in comments %}
+    {{ cm.name }}
+    <br>
+    {{ cm.body }}
+    <hr>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="add comment">
+</form>
+
+<a href="{% url 'social:post_detail' post.id %}">
+    return to post
+</a>
+
+
+{% endblock %}
