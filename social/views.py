@@ -1,3 +1,6 @@
+from typing import Any
+from django.http.request import HttpRequest as HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render
 from .forms import *
 from .models import *
@@ -175,7 +178,15 @@ def post_comment(request, pk):
 
 class UserLoginView(views.LoginView):
     form_class = LoginForm
+    
 
 
 class UserLogoutView(views.LogoutView):
     form_class = LogoutForm
+    template_name = 'registration/logged_out.html'
+    # def http_method_not_allowed(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+    #     return super().http_method_not_allowed(request, *args, **kwargs)
+
+
+def userlogout(request):
+    return render(request, "registration/logout.html")
