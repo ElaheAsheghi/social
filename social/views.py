@@ -146,15 +146,11 @@ def search(request):
             'query':query,
             'results':results,
         }
-        print(type(Post.tags))
-        print(type(Post.description))
-        print(type(Post.tagged_items))
-
         return render(request, 'social/search.html', context)
     
 
 #Comment
-# @login_required(next='blog:post_detail')
+# @login_required(next='social:post_detail')
 @require_POST
 def post_comment(request, pk):
     post = get_object_or_404(Post, id=pk)
@@ -175,3 +171,11 @@ def post_comment(request, pk):
         'comments':comments,
     }
     return render(request, "forms/comment.html", context)
+
+
+class UserLoginView(views.LoginView):
+    form_class = LoginForm
+
+
+class UserLogoutView(views.LogoutView):
+    form_class = LogoutForm

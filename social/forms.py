@@ -122,3 +122,21 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['body']
+
+
+class LoginForm(AuthenticationForm):
+   
+    username = forms.CharField(label='نام کاربری',required=True, widget=forms.TextInput(
+        attrs = {
+            'placeholder':'username'
+        }
+    ))
+    password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput(
+        attrs = {
+            'placeholder': 'password'
+        }
+    ))
+
+
+class LogoutForm(AuthenticationForm):
+    pass
