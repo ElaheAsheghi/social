@@ -3,6 +3,10 @@
 {% block content %}
     {{ post.author }}:
     <br>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="" style="width: 500px; height: 500px;">
+    {% endif %}
+    <br>
     {{ post.description }}
     <br>
     {% for tag in post.tags.all %}

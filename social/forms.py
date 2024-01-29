@@ -99,7 +99,7 @@ class CreatePostForm(forms.ModelForm):
    
     class Meta:
         model = Post
-        fields = ['description', 'tags']
+        fields = ['description', 'image', 'tags']
 
     def clean_description(self):
         description = self.cleaned_data['description']
@@ -124,6 +124,7 @@ class CommentForm(forms.ModelForm):
         fields = ['body']
 
 
+#LoginForm
 class LoginForm(AuthenticationForm):
    
     username = forms.CharField(label='نام کاربری',required=True, widget=forms.TextInput(
@@ -138,5 +139,6 @@ class LoginForm(AuthenticationForm):
     ))
 
 
+#LogoutForm
 class LogoutForm(AuthenticationForm):
     pass

@@ -63,4 +63,5 @@ urlpatterns = [
 
     #Delete Post
     path('posts/<pk>/delete', views.delete_post, name="delete_post"),
+    path('posts/<pk>/deleted', views.deleted_post, name="deleted_post"),
 ]

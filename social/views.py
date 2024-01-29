@@ -105,7 +105,7 @@ def post_list(request, tag_slug=None):
 @login_required
 def create_post(request):
     if request.method == "POST":
-        form = CreatePostForm(data=request.POST)
+        form = CreatePostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user

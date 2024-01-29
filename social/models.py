@@ -21,6 +21,7 @@ class Post(models.Model):
    
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_posts", verbose_name="نویسنده")
     description = models.TextField(verbose_name="متن پست")
+    image = models.ImageField(upload_to='post_images/%Y/%m/%d', blank=True, null=True)
     tags = TaggableManager()
     #DATE
     created = models.DateTimeField(auto_now_add=True)
@@ -40,6 +41,11 @@ class Post(models.Model):
         
     def __str__(self):
         return self.description
+    
+    def delete(self, using=None, keep_parents=False):
+        if self.image:
+            self.image.delete()
+        super().delete()
     
 
 #Comment Model
