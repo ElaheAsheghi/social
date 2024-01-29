@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 #profile
 def profile(reguest):
-    return HttpResponse("پروفایل")
+    return redirect('social:post_list')
 
 
 #Login
@@ -198,6 +198,7 @@ def edit_post(request, pk):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            form.save_m2m()
             return redirect(post)
     else:
         form = CreatePostForm(instance=post)
@@ -206,6 +207,17 @@ def edit_post(request, pk):
         'form': form,
     }
     return render(request, "forms/edit_post.html", context)
+
+
+#Delete Post
+def delete_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    return render(request, "forms/delete_post.html", {'post': post})
+    
+def deleted_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    post.delete()
+    return redirect('social:post_list')
     
 
 

@@ -9,7 +9,7 @@
             <a href="{% url 'social:post_list_by_tag' tag_slug=tag.slug%}">
                 #{{ tag.name }}
             </a>
-        {% if not forloop.last %}, {% endif %}
+        {% if not forloop.last %}&nbsp; {% endif %}
     {% endfor %}
     <br>
     {{ post.created }}
@@ -17,6 +17,12 @@
     {% if post.author == request.user %}
             <a href="{% url 'social:edit_post' post.id %}">
                 edit post
+            </a>
+    {% endif %}
+    &nbsp;
+    {% if post.author == request.user %}
+            <a href="{% url 'social:delete_post' post.id %}">
+                delete post
             </a>
     {% endif %}
     <hr>

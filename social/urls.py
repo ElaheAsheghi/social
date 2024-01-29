@@ -60,4 +60,7 @@ urlpatterns = [
 
     #Edit Post
     path('posts/detail/<pk>/edit', views.edit_post, name="edit_post"),
+
+    #Delete Post
+    path('posts/<pk>/delete', views.delete_post, name="delete_post"),
 ]
