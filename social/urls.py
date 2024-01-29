@@ -57,4 +57,7 @@ urlpatterns = [
 
     #Comment
     path('posts/<pk>/comment', views.post_comment, name="post_comment"),
+
+    #Edit Post
+    path('posts/detail/<pk>/edit', views.edit_post, name="edit_post"),
 ]

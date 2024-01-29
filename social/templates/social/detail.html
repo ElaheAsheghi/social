@@ -1,18 +1,24 @@
 {% extends 'parent/base.html' %}
 {% block title %}post detail{% endblock %}
 {% block content %}
-    {{ post.author }}
-    {{ post.created }}
+    {{ post.author }}:
     <br>
     {{ post.description }}
-
     <br>
     {% for tag in post.tags.all %}
             <a href="{% url 'social:post_list_by_tag' tag_slug=tag.slug%}">
-                {{ tag.name }}
+                #{{ tag.name }}
             </a>
         {% if not forloop.last %}, {% endif %}
     {% endfor %}
+    <br>
+    {{ post.created }}
+    <br>
+    {% if post.author == request.user %}
+            <a href="{% url 'social:edit_post' post.id %}">
+                edit post
+            </a>
+    {% endif %}
     <hr>
     <h2>
         Comments

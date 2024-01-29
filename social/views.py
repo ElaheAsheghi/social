@@ -176,17 +176,36 @@ def post_comment(request, pk):
     return render(request, "forms/comment.html", context)
 
 
+#Login
 class UserLoginView(views.LoginView):
     form_class = LoginForm
     
 
+#Logout
+def userlogout(request):
+    return render(request, "registration/logout.html")
 
 class UserLogoutView(views.LogoutView):
     form_class = LogoutForm
-    template_name = 'registration/logged_out.html'
-    # def http_method_not_allowed(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-    #     return super().http_method_not_allowed(request, *args, **kwargs)
 
 
-def userlogout(request):
-    return render(request, "registration/logout.html")
+#Edit Post
+def edit_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if request.method == 'POST':
+        form = CreatePostForm(data=request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect(post)
+    else:
+        form = CreatePostForm(instance=post)
+    context = {
+        'post': post,
+        'form': form,
+    }
+    return render(request, "forms/edit_post.html", context)
+    
+
+
