@@ -1,34 +1,53 @@
 {% extends 'parent/base.html' %}
 {% block title %}post detail{% endblock %}
 {% block content %}
-    {{ post.author }}:
-    <br>
-    {% if post.image %}
-        <img src="{{ post.image.url }}" alt="" style="width: 500px; height: 500px;">
-    {% endif %}
-    <br>
-    {{ post.description }}
-    <br>
-    {% for tag in post.tags.all %}
-            <a href="{% url 'social:post_list_by_tag' tag_slug=tag.slug%}">
-                #{{ tag.name }}
-            </a>
-        {% if not forloop.last %}&nbsp; {% endif %}
-    {% endfor %}
-    <br>
-    {{ post.created }}
-    <br>
-    {% if post.author == request.user %}
-            <a href="{% url 'social:edit_post' post.id %}">
-                edit post
-            </a>
-    {% endif %}
-    &nbsp;
-    {% if post.author == request.user %}
-            <a href="{% url 'social:delete_post' post.id %}">
-                delete post
-            </a>
-    {% endif %}
+    <div class="post" data-post-id="{{ post.id }}">
+        {{ post.author }}:
+        <br>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="" style="width: 500px; height: 500px;">
+        {% endif %}
+        <br>
+        {{ post.description }}
+        <br>
+        {% for tag in post.tags.all %}
+                <a href="{% url 'social:post_list_by_tag' tag_slug=tag.slug%}">
+                    #{{ tag.name }}
+                </a>
+            {% if not forloop.last %}&nbsp; {% endif %}
+        {% endfor %}
+        <br>
+        {{ post.created }}
+        <br>
+        {% if post.author == request.user %}
+                <a href="{% url 'social:edit_post' post.id %}">
+                    edit post
+                </a>
+        {% endif %}
+        &nbsp;
+        {% if post.author == request.user %}
+                <a href="{% url 'social:delete_post' post.id %}">
+                    delete post
+                </a>
+        {% endif %}
+        <br>
+        <button class="like-button">
+            {% if request.user in post.likes.all %}
+                Unlike
+            {% else %}
+                Like
+            {% endif %}
+        </button>
+        <span class="likes-count">
+            {{ post.likes.count }}
+        </span>
+        {% if post.likes.count > 1 %}
+            likes
+        {% else %}
+            like
+        {% endif %}
+    </div>
+    
     <hr>
     <h2>
         Comments
@@ -60,4 +79,31 @@
     {% empty %}
         There are no similar posts.
     {% endfor %}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.like-button').click(function() {
+            var post_id = $(this).closest('.post').data('post-id');
+            var button = $(this);
+            
+            $.ajax({
+                type : 'POST',
+                url : '{% url "social:like_post" %}',
+                data : {"post_id": post_id, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success : function(data){
+                    if (data.liked){
+                        button.text('Unlike');
+                    } else {
+                        button.text('Like');
+                    }
+                    
+                    $('.likes-count').text(data.likes_count);
+                },
+            });
+        });
+    });
+</script>
+
 {% endblock %}
