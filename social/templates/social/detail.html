@@ -42,6 +42,14 @@
         <span class="likes-count">
             {{ post.likes.count }} Like{{post.likes.count|pluralize}}
         </span>
+        &nbsp;
+        <button class="save-button">
+            {% if request.user in post.saved_by.all %}
+                Unsave
+            {% else %}
+                Save
+            {% endif %}
+        </button>
     </div>
     
     <hr>
@@ -99,6 +107,27 @@
                 },
             });
         });
+
+        $('.save-button').click(function() {
+            var button = $(this);
+            var post_id = $(this).closest('.post').data('post-id');
+            $.ajax({
+                type : 'POST',
+                url : '{% url "social:save_post" %}',
+                data : {"post_id": post_id, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success : function(data){
+                    if (data.saved){
+                        button.text('Unsave');
+                    } else {
+                        button.text('Save');
+                    }
+                },
+                error : function(error) {
+                    console.log(" :eror in request Ajax" + error);
+                }
+            });
+        });
+
     });
 </script>
 

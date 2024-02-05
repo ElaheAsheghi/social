@@ -66,5 +66,8 @@ urlpatterns = [
     path('posts/<pk>/deleted', views.deleted_post, name="deleted_post"),
 
     #Like Post
-    path('like_post/', views.like_post, name="like_post"),
+    path('like-post/', views.like_post, name="like_post"),
+
+    #Save Post
+    path('save-post/', views.save_post, name="save_post"),
 ]

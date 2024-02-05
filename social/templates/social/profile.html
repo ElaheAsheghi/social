@@ -1,0 +1,20 @@
+{% extends 'parent/base.html' %}
+{% block title %}delete post{% endblock %}
+{% block content %}
+
+{% for post in saved_posts %}
+    <a href="{{ post.get_absolute_url }}">
+        {{ post.author }}
+        {{ post.description|truncatewords:20|linebreaks }}
+        {{ post.created }}
+        <br>
+        {% for tag in post.tags.all %}
+            <a href="{% url 'social:post_list_by_tag' tag_slug=tag.slug%}">
+                {{ tag.name }}
+            </a>
+        {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </a>
+    <hr>
+{% endfor %}
+{% endblock %}

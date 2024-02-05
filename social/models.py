@@ -24,6 +24,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images/%Y/%m/%d', blank=True, null=True)
     tags = TaggableManager()
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
+    saved_by = models.ManyToManyField(User, related_name='saved_posts')
     #DATE
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

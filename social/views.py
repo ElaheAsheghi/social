@@ -19,8 +19,13 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 #profile
-def profile(reguest):
-    return redirect('social:post_list')
+def profile(request):
+    user = request.user
+    saved_posts = user.saved_posts.all()
+    context = {
+        'saved_posts' : saved_posts,
+    }
+    return render(request, 'social/profile.html', context)
 
 
 #Login
@@ -247,4 +252,25 @@ def like_post(request):
         response_data = {'error': 'Invalid post_id'}
     return JsonResponse(response_data)
 
+
+#Save Post
+@login_required
+@require_POST
+def save_post(request):
+    post_id = request.POST.get('post_id')
+    if post_id is not None:
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+        if user in post.saved_by.all():
+            post.saved_by.remove(user)
+            saved = False
+        else:
+            post.saved_by.add(user)
+            saved = True
+        response_data = {
+            'saved': saved,
+        }    
+    else:
+        response_data = {'error': 'Invalid post_id'}
+    return JsonResponse(response_data)
 
