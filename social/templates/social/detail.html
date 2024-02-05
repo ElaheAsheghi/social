@@ -38,14 +38,10 @@
                 Like
             {% endif %}
         </button>
+        
         <span class="likes-count">
-            {{ post.likes.count }}
+            {{ post.likes.count }} Like{{post.likes.count|pluralize}}
         </span>
-        {% if post.likes.count > 1 %}
-            likes
-        {% else %}
-            like
-        {% endif %}
     </div>
     
     <hr>
@@ -99,7 +95,7 @@
                         button.text('Like');
                     }
                     
-                    $('.likes-count').text(data.likes_count);
+                    $('.likes-count').text(data.likes_count + ' Like{{post.likes.count|pluralize}}');
                 },
             });
         });
