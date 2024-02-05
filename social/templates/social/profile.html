@@ -1,5 +1,5 @@
 {% extends 'parent/base.html' %}
-{% block title %}delete post{% endblock %}
+{% block title %}profile{% endblock %}
 {% block content %}
 
 {% for post in saved_posts %}
@@ -17,4 +17,11 @@
     </a>
     <hr>
 {% endfor %}
+<div>
+    <a href="{% url 'social:password_change' %}" class="btn" role="button" data-bs-toggle="button">تغییر پسورد</a>
+    <a href="{% url 'social:edit_user' %}" class="btn" role="button" data-bs-toggle="button">تغییر اطلاعات شخصی</a>
+    <a href="{% url 'social:user_logout' %}" class="btn" role="button" data-bs-toggle="button">خروج از حساب کاربری</a>
+    <a href="{% url 'social:ticket' %}" class="btn" role="button" data-bs-toggle="button">ارسال تیکت به پشتیبانی</a>
+    
+</div>
 {% endblock %}

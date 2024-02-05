@@ -191,6 +191,7 @@ class UserLoginView(views.LoginView):
     
 
 #Logout
+@require_POST
 def userlogout(request):
     return render(request, "registration/logout.html")
 
