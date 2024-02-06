@@ -70,4 +70,7 @@ urlpatterns = [
 
     #Save Post
     path('save-post/', views.save_post, name="save_post"),
+
+    #User List
+    path('users/', views.user_list, name="user_list"),
 ]

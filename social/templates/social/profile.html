@@ -10,7 +10,7 @@
         <img src="{% thumbnail request.user.photo 200x0 quality=100 %}" alt="{{request.user.first_name}}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
     </a>
 {% else %}
-    <img src="{% static 'images/avatar/images.png' %}" alt="{{request.user.first_name}}">
+    <img src="{% static 'images/avatar/images.png' %}" alt="{{request.user.first_name}}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
 {% endif %}
 </div>
 <br>
