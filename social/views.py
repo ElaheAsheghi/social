@@ -281,3 +281,8 @@ def user_list(request):
     users = User.objects.filter(is_active=True)
     return render(request, 'social/user_list.html', {'users' : users})
 
+
+#User Detail
+def user_detail(request, username):
+    user = get_object_or_404(User, username=username, is_active=True)
+    return render(request, 'social/user_detail.html', {'user' : user})

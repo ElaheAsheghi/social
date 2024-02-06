@@ -73,4 +73,7 @@ urlpatterns = [
 
     #User List
     path('users/', views.user_list, name="user_list"),
+
+    #User Detail
+    path('users/<username>/', views.user_detail, name="user_detail"),
 ]

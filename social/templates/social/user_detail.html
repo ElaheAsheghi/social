@@ -1,0 +1,48 @@
+{% extends 'parent/base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% block title %}users{% endblock %}
+{% block content %}
+
+    <div style="width: 200px; height: 200px;">
+        {% if user.photo %}
+        <a href="{{ user.get_absolute_url }}">
+            <img src="{% thumbnail user.photo 200x0 quality=100 %}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
+        </a>
+        {% else %}
+        <img src="{% static 'images/avatar/images.png' %}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        <p>
+            {{ user.get_full_name }}
+        </p>
+        &nbsp;
+        <p>
+            Bio: {{ user.bio|default:'---'}}
+        </p>
+        <p>
+            Date of birth: {{ user.date_of_birth|default:'---'}}
+        </p>
+        <p>
+            Job: {{ user.job|default:'---'}}
+        </p>
+    </div>
+
+    <div>
+        {% with total_followers=user.followers.count total_following=user.following.count %}
+        <p>
+            {{ total_followers }} follower{{ total_followers|pluralize}}
+        </p>
+        <p>
+            {{ total_following }} following
+        </p>
+        {% endwith %}
+        <button>
+            follow/unfollow
+        </button>
+    </div>
+
+
+{% endblock %}
