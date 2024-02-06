@@ -14,6 +14,7 @@ class User(AbstractUser):
     photo = models.ImageField(upload_to="account_images/", blank= True, null= True)
     job = models.CharField(max_length= 250, blank= True, null= True)
     phone = models.CharField(max_length= 11, blank= True, null= True)
+    following = models.ManyToManyField('self', through='Contact', related_name='followers', symmetrical=False)
 
 
 #Post Model
@@ -68,3 +69,20 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.name} : {self.post}"
+    
+
+#M2M Table For Follow
+class Contact(models.Model):
+   
+    user_from = models.ForeignKey(User, related_name='rel_from_set', on_delete=models.CASCADE) #the user who follows someone
+    user_to = models.ForeignKey(User, related_name='rel_to_set', on_delete=models.CASCADE) #the user who followed by someone
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created'])
+        ]
+        ordering = ['-created']
+
+    def __str__(self):
+        return f"{self.user_from} follows {self.user_to}"
