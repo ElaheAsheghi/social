@@ -1,7 +1,23 @@
 {% extends 'parent/base.html' %}
+{% load thumbnail %}
+{% load static %}
 {% block title %}profile{% endblock %}
 {% block content %}
 
+<div style="width: 200px; height: 200px;">
+    {% if request.user.photo %}
+    <a href="{{ request.user.photo.url }}">
+        <img src="{% thumbnail request.user.photo 200x0 quality=100 %}" alt="{{request.user.first_name}}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
+    </a>
+{% else %}
+    <img src="{% static 'images/avatar/images.png' %}" alt="{{request.user.first_name}}">
+{% endif %}
+</div>
+<br>
+<p>
+    {{ request.user.get_full_name }}
+</p>
+<hr>
 {% for post in saved_posts %}
     <a href="{{ post.get_absolute_url }}">
         {{ post.author }}
