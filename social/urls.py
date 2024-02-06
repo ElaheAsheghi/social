@@ -76,4 +76,7 @@ urlpatterns = [
 
     #User Detail
     path('users/<username>/', views.user_detail, name="user_detail"),
+
+    #Follow/Unfollow
+    path('follow/', views.user_follow, name="user_follow"),
 ]

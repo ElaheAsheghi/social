@@ -11,12 +11,14 @@
             <img src="{% thumbnail user.photo 200x0 quality=100 %}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
         </a>
         {% else %}
-        <img src="{% static 'images/avatar/images.png' %}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
+        <a href="{{ user.get_absolute_url }}">
+            <img src="{% static 'images/avatar/images.png' %}" style="border-radius: 100px; width: 100%; height: 100%; object-fit: cover;">
         {% endif %}
+        </a>
     </div>
     <br>
     <a href="{{ user.get_absolute_url }}">
-    {{ user.get_full_name }}
+    {{ user.get_full_name|default:user.username }}
     </a>
     &nbsp;
 {% endfor %}
