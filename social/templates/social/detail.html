@@ -19,17 +19,15 @@
         <br>
         {{ post.created }}
         <br>
-        {% if post.author == request.user %}
-                <a href="{% url 'social:edit_post' post.id %}">
-                    edit post
-                </a>
-        {% endif %}
-        &nbsp;
-        {% if post.author == request.user %}
-                <a href="{% url 'social:delete_post' post.id %}">
-                    delete post
-                </a>
-        {% endif %}
+        
+        
+        <span class="likes-count">
+            {{ post.likes.count }} like{{post.likes.count|pluralize}}
+        </span>
+
+        <span class="comments-count">
+            {{ post.comments.count }} comment{{post.comments.count|pluralize}}
+        </span>
         <br>
         <button class="like-button">
             {% if request.user in post.likes.all %}
@@ -38,19 +36,28 @@
                 Like
             {% endif %}
         </button>
-        
-        <span class="likes-count">
-            {{ post.likes.count }} Like{{post.likes.count|pluralize}}
-        </span>
         &nbsp;
         <button class="save-button">
             {% if request.user in post.saved_by.all %}
                 Unsave
             {% else %}
-                Save
+                save
             {% endif %}
         </button>
     </div>
+    <br>
+    {% if post.author == request.user %}
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2" type="button">
+                <a href="{% url 'social:edit_post' post.id %}" style="color: aliceblue; text-decoration: none;">
+                edit
+            </a></button>
+            <button class="btn btn-primary" type="button">
+                <a href="{% url 'social:delete_post' post.id %}" style="color: aliceblue; text-decoration: none;">
+                delete
+            </a></button>
+        </div>
+    {% endif %}
     
     <hr>
     <h2>
@@ -98,12 +105,12 @@
                 data : {"post_id": post_id, "csrfmiddlewaretoken": "{{ csrf_token }}"},
                 success : function(data){
                     if (data.liked){
-                        button.text('Unlike');
+                        button.text('unlike');
                     } else {
-                        button.text('Like');
+                        button.text('like');
                     }
                     
-                    $('.likes-count').text(data.likes_count + ' Like{{post.likes.count|pluralize}}');
+                    $('.likes-count').text(data.likes_count + ' like{{post.likes.count|pluralize}}');
                 },
             });
         });
@@ -117,9 +124,9 @@
                 data : {"post_id": post_id, "csrfmiddlewaretoken": "{{ csrf_token }}"},
                 success : function(data){
                     if (data.saved){
-                        button.text('Unsave');
+                        button.text('unsave');
                     } else {
-                        button.text('Save');
+                        button.text('save');
                     }
                 },
                 error : function(error) {
