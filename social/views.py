@@ -20,10 +20,13 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 #profile
 def profile(request):
-    user = request.user
-    saved_posts = user.saved_posts.all()
+    user = User.objects.prefetch_related('followers', 'following').get(id=request.user.id)
+    saved_posts = user.saved_posts.all()[:5]
+    my_posts = user.user_posts.all()
     context = {
+        'user' : user,
         'saved_posts' : saved_posts,
+        'my_posts' : my_posts,
     }
     return render(request, 'social/profile.html', context)
 
@@ -85,7 +88,7 @@ def ticket(request):
 
 #Post List
 def post_list(request, tag_slug=None):
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('author').all()
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -285,7 +288,8 @@ def user_list(request):
 #User Detail
 def user_detail(request, username):
     user = get_object_or_404(User, username=username, is_active=True)
-    return render(request, 'social/user_detail.html', {'user' : user})
+    user_posts = user.user_posts.all()
+    return render(request, 'social/user_detail.html', {'user' : user, 'user_posts' : user_posts})
 
 
 #User Follow
