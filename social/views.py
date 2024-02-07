@@ -88,7 +88,7 @@ def ticket(request):
 
 #Post List
 def post_list(request, tag_slug=None):
-    posts = Post.objects.select_related('author').all()
+    posts = Post.objects.select_related('author').all().order_by('-total_likes')
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
