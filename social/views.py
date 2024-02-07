@@ -15,6 +15,7 @@ from django.contrib.auth import views
 from django.db.models import Count
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # Create your views here.
@@ -81,6 +82,7 @@ def ticket(request):
             send_mail(cd['subject'], message,\
                        'socialwebproject2024@gmail.com', ['asheghielahe@gmail.com'], fail_silently=False)
             sent = True
+            messages.success(request, 'sent!')
     else:
         form = TicketForm()
     return render(request, "forms/ticket.html", {'form':form, 'sent':sent})
