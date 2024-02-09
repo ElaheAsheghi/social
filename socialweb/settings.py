@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.postgres',
     'easy_thumbnails',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -162,3 +164,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = 'lhht ajla zhco yede'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

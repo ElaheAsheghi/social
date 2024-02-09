@@ -21,7 +21,7 @@ from django.contrib import messages
 # Create your views here.
 #profile
 def profile(request):
-    user = User.objects.prefetch_related('followers', 'following').get(id=request.user.id)
+    user = request.user
     saved_posts = user.saved_posts.all()[:5]
     my_posts = user.user_posts.all()
     context = {

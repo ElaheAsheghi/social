@@ -88,7 +88,7 @@
 {% else %}
         there is no saved posts!
 {% endif %}
-<div class="sticky-bottom">
+<div class="fixed-bottom" style="background-color: rgb(131, 34, 88);">
     <a href="{% url 'social:password_change' %}" class="btn" role="button" data-bs-toggle="button">تغییر پسورد</a>
     <a href="{% url 'social:edit_user' %}" class="btn" role="button" data-bs-toggle="button">تغییر اطلاعات شخصی</a>
     <a href="{% url 'social:user_logout' %}" class="btn" role="button" data-bs-toggle="button">خروج از حساب کاربری</a>
