@@ -82,4 +82,13 @@ urlpatterns = [
 
     #Admin Messages
     path('admin-messages/', views.admin_messages, name="admin_messages"),
+
+    #Users Liked Post
+    path('post-likes/<pk>', views.users_liked_post, name="users_liked_post"),
+
+    #Following List
+    path('<username>/following-list/', views.user_following_list, name="following_list"),
+
+    #Followers List
+    path('<username>/followers-list/', views.user_followers_list, name="followers_list"),
 ]

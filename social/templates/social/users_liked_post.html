@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+{% block title %}likes{% endblock %}
+{% block content %}
+
+{% for user in users_have_liked %}
+    <a href="{{ user.get_absolute_url }}">
+        {{ user.username }}
+    </a>
+    <hr>
+{% endfor %}
+
+{% endblock %}

@@ -33,10 +33,23 @@
     <div>
         {% with total_followers=user.followers.count total_following=user.following.count %}
         <p class="followers-count">
-            {{ total_followers }} follower{{ total_followers|pluralize}}
+            {% if user.followers %}
+                <a href="{% url 'social:followers_list' username=user.username %}">
+                    {{ total_followers }} follower{{ total_followers|pluralize}}
+                </a>
+            {% else %}
+                {{ total_followers }} follower{{ total_followers|pluralize}}
+            {% endif %}
         </p>
+        
         <p class="following-count">
-            {{ total_following }} following
+            {% if user.following %}
+                <a href="{% url 'social:following_list' username=user.username %}">
+                    {{ total_following }} following
+                </a>
+            {% else %}
+                {{ total_following }} following
+            {% endif %}
         </p>
         {% endwith %}
         <button class="follow-button">

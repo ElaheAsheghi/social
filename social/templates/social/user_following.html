@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+{% block title %}following{% endblock %}
+{% block content %}
+
+{% for user in following_list %}
+    <a href="{{ user.get_absolute_url }}">
+        {{ user.username }}
+    </a>
+    <hr>
+{% endfor %}
+
+{% endblock %}

@@ -323,3 +323,22 @@ def admin_messages(request):
     messages = user.admin_messages.all()
     return render(request, 'social/admin_messages.html', {'messages' : messages})
 
+#Post Likes
+def users_liked_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    users_have_liked = post.likes.all()
+    return render(request, 'social/users_liked_post.html', {'users_have_liked' : users_have_liked})
+
+
+#User Following
+def user_following_list(request, username):
+    user = get_object_or_404(User, username=username)
+    following_list = user.following.all()
+    return render(request, 'social/user_following.html', {'following_list' : following_list})
+
+
+#User Followers
+def user_followers_list(request, username):
+    user = get_object_or_404(User, username=username)
+    followers_list = user.followers.all()
+    return render(request, 'social/user_followers.html', {'followers_list' : followers_list})

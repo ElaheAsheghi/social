@@ -2,7 +2,9 @@
 {% block title %}post detail{% endblock %}
 {% block content %}
     <div class="post" data-post-id="{{ post.id }}">
-        {{ post.author }}:
+        <a href="{{ post.author.get_absolute_url }}">
+            {{ post.author }}:
+        </a>
         <br>
         {% if post.image %}
             <img src="{{ post.image.url }}" alt="" style="width: 500px; height: 500px;">
@@ -20,10 +22,17 @@
         {{ post.created }}
         <br>
         
-        
         <span class="likes-count">
-            {{ post.likes.count }} like{{post.likes.count|pluralize}}
+            {% if post.likes %}
+                <a href="{% url 'social:users_liked_post' pk=post.id %}">
+                    {{ post.likes.count }} like{{post.likes.count|pluralize}}
+                </a>
+            {% else %}
+                {{ post.likes.count }} like{{post.likes.count|pluralize}}
+            {% endif %}
         </span>
+        
+
 
         <span class="comments-count">
             {{ post.comments.count }} comment{{post.comments.count|pluralize}}
