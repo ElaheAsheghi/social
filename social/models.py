@@ -30,6 +30,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name="liked_posts", blank=True)
     saved_by = models.ManyToManyField(User, related_name='saved_posts')
     total_likes = models.PositiveIntegerField(default=0)
+    active = models.BooleanField(default=True)
     #DATE
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -41,8 +42,8 @@ class Post(models.Model):
             models.Index(fields=['-total_likes']) 
         ]
 
-        verbose_name = "پست"
-        verbose_name_plural = "پست ها"
+        verbose_name = "post"
+        verbose_name_plural = "posts"
 
     def get_absolute_url(self):
         return reverse('social:post_detail', args=[self.id])
