@@ -78,7 +78,8 @@ def ticket(request):
         form = TicketForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            message = f"{cd['name']}\n{cd['email']}\n{cd['phone']}\n\n{cd['message']}"
+            user = request.user
+            message = f"{user}:\n\n{cd['message']}"
             send_mail(cd['subject'], message,\
                        'socialwebproject2024@gmail.com', ['asheghielahe@gmail.com'], fail_silently=False)
             sent = True
@@ -314,4 +315,11 @@ def user_follow(request):
         except user.DoesNotExist:
             return JsonResponse({'error' : 'user does not exist'})
     return JsonResponse({'error' : 'invalid request'})
+
+
+#Admin Messages
+def admin_messages(request):
+    user = request.user
+    messages = user.admin_messages.all()
+    return render(request, 'social/admin_messages.html', {'messages' : messages})
 

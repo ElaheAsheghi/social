@@ -75,14 +75,14 @@ class TicketForm(forms.Form):
         ('گزارش', 'گزارش')
     )
     message = forms.CharField(widget=forms.Textarea, required=True)
-    name = forms.CharField(max_length=250, required=True, 
-                           widget=forms.TextInput(attrs={'placeholder':'نام',
-                                                         'class':'name',}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder':'ایمیل',
-                                                            'class':'email'}))
-    phone = forms.CharField(max_length=11, required=True, 
-                            widget=forms.NumberInput({'placeholder':'شماره تماس',
-                                                        'class':'phone'}))
+    # name = forms.CharField(max_length=250, required=True, 
+    #                        widget=forms.TextInput(attrs={'placeholder':'نام',
+    #                                                      'class':'name',}))
+    # email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder':'ایمیل',
+    #                                                         'class':'email'}))
+    # phone = forms.CharField(max_length=11, required=True, 
+    #                         widget=forms.NumberInput({'placeholder':'شماره تماس',
+    #                                                     'class':'phone'}))
     subject = forms.ChoiceField(choices=SUBJECT_CHOICES)
 
     def clean_phone(self):

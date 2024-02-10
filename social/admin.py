@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Post
+from .models import User, Post, AdminMessage
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -41,3 +41,10 @@ class PostAdmin(admin.ModelAdmin):
     list_display_links = ['description']
     # inlines = [ImageInline, CommentInline]
     actions = [make_deactivation]
+
+
+#AdminMessage
+@admin.register(AdminMessage)
+class AdminMessage(admin.ModelAdmin):
+    list_display = ['subject', 'user', 'date']
+    search_fields = ['subject', 'message']

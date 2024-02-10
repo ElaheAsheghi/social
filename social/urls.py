@@ -79,4 +79,7 @@ urlpatterns = [
 
     #Follow/Unfollow
     path('follow/', views.user_follow, name="user_follow"),
+
+    #Admin Messages
+    path('admin-messages/', views.admin_messages, name="admin_messages"),
 ]

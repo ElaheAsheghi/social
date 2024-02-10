@@ -92,3 +92,18 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.user_from} follows {self.user_to}"
+    
+
+#Admin Messages To Users
+class AdminMessage(models.Model):
+
+    user = models.ForeignKey(User, related_name='admin_messages' , on_delete=models.CASCADE)
+    subject = models.CharField()
+    message = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['-date'])
+        ]
+        ordering = ['-date']

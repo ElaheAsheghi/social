@@ -1,0 +1,15 @@
+{% extends 'parent/base.html' %}
+{% block title %}messages{% endblock %}
+{% block content %}
+
+{% if messages %}
+    {% for msg in messages %}
+        <h4>{{ msg.subject }} :</h4>
+        <p>{{ msg.message }}</p>
+        <p>{{ msg.date }}</p>
+    {% endfor %}
+{% else %}
+    <h4>you have no message!</h4>
+{% endif %}
+
+{% endblock %}
