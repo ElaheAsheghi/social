@@ -70,15 +70,15 @@
     {% endif %}
     
     <div class="social-sharing">
-        <h3>Share this post:</h3>
-        {% post_to_telegram "{{ post }}" "share on telegram" %}
-        {% post_to_whatsapp "{{ post }}" %}
-        {% send_email share post "{{ post }}" %}
+        <h4>Share this post:</h4>
+        {% post_to_telegram "watch this post by {{ post.author }}" post.id "Share via telegram" %}
+        {% post_to_whatsapp post.id "Share via whatsapp" %}
+        {% send_email post.author "watch this post by {{ post.author }}" post.id %}
     </div>
     <hr>
-    <h2>
+    <h4>
         Comments
-    </h2>
+    </h4>
     <div>
         {% for cm in comments %}
             {{cm.name}}
@@ -94,9 +94,9 @@
         <input type="submit" value="add comment">
     </form>
     <hr>
-    <h2>
+    <h4>
         Similar Posts
-    </h2>
+    </h4>
     {% for post in similar_post %}
         <p>
             <a href="{{ post.get_absolute_url }}">
