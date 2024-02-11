@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'easy_thumbnails',
     'debug_toolbar',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [
@@ -169,3 +170,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+

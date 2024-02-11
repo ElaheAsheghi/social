@@ -1,4 +1,4 @@
-#!/Users/elahe/Documents/SocialWeb/venv/bin/python3.11
+#!/Users/elahe/Documents/socialweb/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys
