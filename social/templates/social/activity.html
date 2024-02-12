@@ -10,9 +10,18 @@
     <br>
 {% endfor %}
 <hr>
+
 <h6>comment activities</h6>
 {% for act in activity2 %}
 <a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> commented on <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
+<p>{{ act.created }}</p>
+<br>
+{% endfor %}
+<hr>
+
+<h6>follow activities</h6>
+{% for act in activity3 %}
+<a href="{{ act.user_from.get_absolute_url }}">{{ act.user_from }}</a> started following <a href="{{ act.user_to.get_absolute_url }}">{{ act.user_to}}</a>
 <p>{{ act.created }}</p>
 <br>
 {% endfor %}

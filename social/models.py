@@ -140,3 +140,7 @@ class UserCommentActivity(models.Model):
 
     def __str__(self):
         return f"{self.user} commented on {self.post}\n{self.created}"
+    
+
+class UserFollowActivity(models.Model):
+    pass
