@@ -180,6 +180,7 @@ def post_comment(request, pk):
             comment.post = post
             comment.name = request.user
             comment.save()
+            UserCommentActivity.objects.get_or_create(user=request.user, post=post)
     else:
         form = CommentForm()
     comments = post.comments.all()
@@ -349,4 +350,5 @@ def user_followers_list(request, username):
 #User Like Activity
 def user_like_activity(request):
     activity = UsersLikeActivity.objects.all()
-    return render(request, 'social/activity.html', {'activity' : activity})
+    activity2 = UserCommentActivity.objects.all()
+    return render(request, 'social/activity.html', {'activity' : activity, 'activity2' : activity2})

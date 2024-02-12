@@ -3,9 +3,18 @@
 {% block title %}post detail{% endblock %}
 {% block content %}
 
+<h6>like activities</h6>
 {% for act in activity %}
     <a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> liked <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
     <p>{{ act.created }}</p>
-    <hr>
+    <br>
 {% endfor %}
+<hr>
+<h6>comment activities</h6>
+{% for act in activity2 %}
+<a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> commented on <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
+<p>{{ act.created }}</p>
+<br>
+{% endfor %}
+
 {% endblock %}

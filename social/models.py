@@ -61,9 +61,9 @@ class Post(models.Model):
 #Comment Model
 class Comment(models.Model):
     
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments", verbose_name="پست")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     name = models.CharField(max_length=250, verbose_name="نام")
-    body = models.TextField(verbose_name="کامنت")
+    body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
@@ -124,3 +124,19 @@ class UsersLikeActivity(models.Model):
 
     def __str__(self):
         return f"{self.user} liked {self.post} on {self.created}"
+    
+
+class UserCommentActivity(models.Model):
+    user = models.ForeignKey(User, related_name='comment_on_post', on_delete=models.CASCADE)
+    # comment = models.ForeignKey(Comment, related_name='comment', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='post', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created'])
+        ]
+        ordering = ['-created']
+
+    def __str__(self):
+        return f"{self.user} commented on {self.post}\n{self.created}"
