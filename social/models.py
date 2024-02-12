@@ -15,6 +15,7 @@ class User(AbstractUser):
     job = models.CharField(max_length= 250, blank= True, null= True)
     phone = models.CharField(max_length= 11, blank= True, null= True)
     following = models.ManyToManyField('self', through='Contact', related_name='followers', symmetrical=False)
+    like_activity = models.ManyToManyField('Post', through='UsersLikeActivity')
 
     def get_absolute_url(self):
         return reverse('social:user_detail', args=[self.username])
@@ -107,3 +108,19 @@ class AdminMessage(models.Model):
             models.Index(fields=['-date'])
         ]
         ordering = ['-date']
+
+
+#User Activity
+class UsersLikeActivity(models.Model):
+    user = models.ForeignKey(User, related_name='like_post', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='have_liked', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['-created'])
+        ]
+        ordering = ['-created']
+
+    def __str__(self):
+        return f"{self.user} liked {self.post} on {self.created}"

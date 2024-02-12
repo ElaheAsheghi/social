@@ -1,0 +1,11 @@
+{% extends 'parent/base.html' %}
+{% load social_share %}
+{% block title %}post detail{% endblock %}
+{% block content %}
+
+{% for act in activity %}
+    <a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> liked <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
+    <p>{{ act.created }}</p>
+    <hr>
+{% endfor %}
+{% endblock %}

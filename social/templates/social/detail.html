@@ -35,9 +35,7 @@
         
 
 
-        <span class="comments-count">
-            {{ post.comments.count }} comment{{post.comments.count|pluralize}}
-        </span>
+        
         <br>
         <button class="like-button">
             {% if request.user in post.likes.all %}
@@ -76,14 +74,15 @@
         {% send_email post.author "watch this post by {{ post.author }}" post.id %}
     </div>
     <hr>
-    <h4>
-        Comments
-    </h4>
+    <span class="comments-count">
+        {{ post.comments.count }} comment{{post.comments.count|pluralize}}
+    </span>
     <div>
         {% for cm in comments %}
-            {{cm.name}}
+            {{cm.name}}:
             {{cm.body|linebreaks}}
-            <br>
+            {{cm.created}}
+            <hr>
         {% empty %}
         There is no comment!
         {% endfor %}

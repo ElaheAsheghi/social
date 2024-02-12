@@ -91,4 +91,7 @@ urlpatterns = [
 
     #Followers List
     path('<username>/followers-list/', views.user_followers_list, name="followers_list"),
+
+    #Activity
+    path('activity/', views.user_like_activity, name="activity")
 ]

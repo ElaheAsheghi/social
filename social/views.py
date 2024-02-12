@@ -188,7 +188,7 @@ def post_comment(request, pk):
         'form':form,
         'comments':comments,
     }
-    return render(request, "forms/comment.html", context)
+    return render(request, "social/detail.html", context)
 
 
 #Login
@@ -245,9 +245,11 @@ def like_post(request):
         user = request.user
         if user in post.likes.all():
             post.likes.remove(user)
+            UsersLikeActivity.objects.filter(user=request.user, post=post).delete()
             liked = False
         else:
             post.likes.add(user)
+            UsersLikeActivity.objects.get_or_create(user=request.user, post=post)
             liked = True
         post_likes_count = post.likes.count()
         response_data = {
@@ -342,3 +344,9 @@ def user_followers_list(request, username):
     user = get_object_or_404(User, username=username)
     followers_list = user.followers.all()
     return render(request, 'social/user_followers.html', {'followers_list' : followers_list})
+
+
+#User Like Activity
+def user_like_activity(request):
+    activity = UsersLikeActivity.objects.all()
+    return render(request, 'social/activity.html', {'activity' : activity})
