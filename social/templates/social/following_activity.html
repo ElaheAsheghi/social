@@ -1,0 +1,41 @@
+{% extends 'parent/base.html' %}
+{% load social_share %}
+{% block title %}following users activities{% endblock %}
+{% block content %}
+
+<h6>like activities</h6>
+{% if activity %}
+    {% for act in activity %}
+        <a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> liked <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
+        <p>{{ act.created }}</p>
+        <br>
+    {% endfor %}
+{% else %}
+    there is no activity!
+{% endif %}
+<hr>
+
+<h6>comment activities</h6>
+{% if activity2 %}
+    {% for act in activity2 %}
+    <a href="{{ act.user.get_absolute_url }}">{{ act.user }}</a> commented on <a href="{{ act.post.get_absolute_url }}">{{ act.post}}</a>
+    <p>{{ act.created }}</p>
+    <br>
+    {% endfor %}
+{% else %}
+    there is no activity!
+{% endif %}
+<hr>
+
+<h6>follow activities</h6>
+{% if activity3 %}
+    {% for act in activity3 %}
+    <a href="{{ act.user_from.get_absolute_url }}">{{ act.user_from }}</a> started following <a href="{{ act.user_to.get_absolute_url }}">{{ act.user_to}}</a>
+    <p>{{ act.created }}</p>
+    <br>
+    {% endfor %}
+{% else %}
+    there is no activity!
+{% endif %}
+
+{% endblock %}

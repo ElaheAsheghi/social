@@ -347,9 +347,19 @@ def user_followers_list(request, username):
     return render(request, 'social/user_followers.html', {'followers_list' : followers_list})
 
 
-#User Like Activity
-def user_like_activity(request):
+#Users Activity
+def users_activities(request):
     activity = UsersLikeActivity.objects.all()
     activity2 = UserCommentActivity.objects.all()
     activity3 = Contact.objects.all()
     return render(request, 'social/activity.html', {'activity' : activity, 'activity2' : activity2, 'activity3' : activity3})
+
+
+#Following Users Activity
+def following_users_activities(request):
+    user = request.user
+    following = user.following.all()
+    activity = UsersLikeActivity.objects.filter(user__in=following)
+    activity2 = UserCommentActivity.objects.filter(user__in=following)
+    activity3 = Contact.objects.filter(user_from__in=following)
+    return render(request, 'social/following_activity.html', {'activity' : activity, 'activity2' : activity2, 'activity3' : activity3})

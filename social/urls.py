@@ -93,5 +93,8 @@ urlpatterns = [
     path('<username>/followers-list/', views.user_followers_list, name="followers_list"),
 
     #Activity
-    path('activity/', views.user_like_activity, name="activity")
+    path('activity/', views.users_activities, name="activity"),
+
+    #Following Activity
+    path('following-activity/', views.following_users_activities, name="following_activity"),
 ]
