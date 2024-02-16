@@ -208,6 +208,7 @@ class UserLogoutView(views.LogoutView):
 #Edit Post
 def edit_post(request, pk):
     post = get_object_or_404(Post, id=pk)
+    shared = False
     if request.method == 'POST':
         form = CreatePostForm(data=request.POST, instance=post)
         if form.is_valid():
@@ -362,4 +363,21 @@ def following_users_activities(request):
     activity = UsersLikeActivity.objects.filter(user__in=following)
     activity2 = UserCommentActivity.objects.filter(user__in=following)
     activity3 = Contact.objects.filter(user_from__in=following)
-    return render(request, 'social/following_activity.html', {'activity' : activity, 'activity2' : activity2, 'activity3' : activity3})
+
+
+#Ajax Comment
+@require_POST
+def ajax_comment(request):
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        if post_id is not None:
+            post = get_object_or_404(Post, id=post_id)
+            name = request.user
+            
+            body = request.POST.get('body')
+                
+            new_cm = Comment(name=name, body=body, post=post)
+            new_cm.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return render(request, 'forms/ajax_comment.html', {'new_cm':new_cm})
+    return render(request, 'forms/comment.html', {})

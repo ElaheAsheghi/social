@@ -77,7 +77,7 @@
     <span class="comments-count">
         {{ post.comments.count }} comment{{post.comments.count|pluralize}}
     </span>
-    <div>
+    <div id="comment-list">
         {% for cm in comments %}
             {{cm.name}}:
             {{cm.body|linebreaks}}
@@ -87,11 +87,27 @@
         There is no comment!
         {% endfor %}
     </div>
-    <form action="{% url 'social:post_comment' post.id %}" method="post">
+    <!-- <form action="{% url 'social:post_comment' post.id %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="add comment">
+    </form> -->
+    <form id="comment-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>add comment</label>
+            <textarea class="form-control" id="body" placeholder="comment"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btn">send</button>
     </form>
+    <!-- <div class="card">
+        <h6 class="card-header">add comment</h6>
+        <div class="card-body">
+            <textarea class="form-control comment-text"></textarea>
+            <button type="button" class="btn btn-primary save-comment"></button>
+        </div>
+    </div> -->
+
     <hr>
     <h4>
         Similar Posts
@@ -149,8 +165,27 @@
                 }
             });
         });
-
+        $('#btn').click(function(e){
+        var post_id = "{{ post.id }}";
+        e.preventDefault();
+        $.ajax({
+            type : 'POST',
+            url : '{% url "social:ajax_comment" %}',
+            data : {
+                "post_id": post_id,
+                "body" : $('#body').val(),
+                "csrfmiddlewaretoken": "{{ csrf_token }}",
+            },
+            success: function(data) {
+                $('#body').val('');
+                $('#comment-list').append(data);
+            },
+        });
+        });
+        
     });
+    
+        
 </script>
 
 {% endblock %}

@@ -97,4 +97,6 @@ urlpatterns = [
 
     #Following Activity
     path('following-activity/', views.following_users_activities, name="following_activity"),
+
+    path('ajax-comment/', views.ajax_comment, name="ajax_comment"),
 ]
