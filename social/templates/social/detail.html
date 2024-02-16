@@ -74,9 +74,11 @@
         {% send_email post.author "watch this post by {{ post.author }}" post.id %}
     </div>
     <hr>
+    {% with total_cm=post.comments.count %}
     <span class="comments-count">
-        {{ post.comments.count }} comment{{post.comments.count|pluralize}}
+        {{ post.comments.count }} comment{{total_cm|pluralize}}
     </span>
+    {% endwith %}
     <div id="comment-list">
         {% for cm in comments %}
             {{cm.name}}:
@@ -87,11 +89,7 @@
         There is no comment!
         {% endfor %}
     </div>
-    <!-- <form action="{% url 'social:post_comment' post.id %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="add comment">
-    </form> -->
+
     <form id="comment-form">
         {% csrf_token %}
         <div class="form-group">
@@ -100,13 +98,6 @@
         </div>
         <button type="submit" class="btn btn-primary" id="btn">send</button>
     </form>
-    <!-- <div class="card">
-        <h6 class="card-header">add comment</h6>
-        <div class="card-body">
-            <textarea class="form-control comment-text"></textarea>
-            <button type="button" class="btn btn-primary save-comment"></button>
-        </div>
-    </div> -->
 
     <hr>
     <h4>
@@ -179,6 +170,7 @@
             success: function(data) {
                 $('#body').val('');
                 $('#comment-list').append(data);
+                $('.comments-count').text(data.comments_count + 'comment{{total_cm|pluralize}}')
             },
         });
         });

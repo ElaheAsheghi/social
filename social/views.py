@@ -138,7 +138,7 @@ def post_detail(request, pk):
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_post = Post.objects.filter(tags__in=post_tags_ids).exclude(id=post.id)
     similar_post = similar_post.annotate(same_tags=Count('tags')).order_by('-same_tags', '-created')[:2]
-    comments = post.comments.all()
+    comments = post.comments.all()[:5]
     form = CommentForm()
     context = {
         'post':post,
@@ -363,6 +363,7 @@ def following_users_activities(request):
     activity = UsersLikeActivity.objects.filter(user__in=following)
     activity2 = UserCommentActivity.objects.filter(user__in=following)
     activity3 = Contact.objects.filter(user_from__in=following)
+    return render(request, 'social/following_activity.html', {'activity': activity, 'activity2': activity2, 'activity3': activity3,})
 
 
 #Ajax Comment
