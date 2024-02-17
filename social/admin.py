@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import User, Post, AdminMessage
 from django.contrib.auth.admin import UserAdmin
+from django.core.mail import send_mail
 
 
 # Actions
@@ -13,6 +14,19 @@ def make_deactivation(modeladmin, request, queryset):
 
 make_deactivation.short_description = "Deactive"
 
+
+
+#Action For Sending Post ActiveStatus To User
+def send_active(modeladmin, request, queryset):
+    subject = "post status"
+    for obj in queryset:
+        if obj.active:
+            status = 'active'
+        else:
+            status = 'deactive'
+        message = f"status:\t{status}\npost:\n{obj.description}"
+        result = send_mail(subject, message, 'socialwebproject2024@gmail.com', [obj.author.email], fail_silently=False)
+    modeladmin.message_user(request, f'{result} emails have send.')
 
 
 # Register your models here.
@@ -40,7 +54,7 @@ class PostAdmin(admin.ModelAdmin):
     # prepopulated_fields = {"slug":['description']}
     list_display_links = ['description']
     # inlines = [ImageInline, CommentInline]
-    actions = [make_deactivation]
+    actions = [make_deactivation, send_active]
 
 
 #AdminMessage
