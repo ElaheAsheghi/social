@@ -2,12 +2,9 @@
 {% block title %}Register{% endblock %}
 {% block content %}  
     <h1>
-        {{ user }} عزیز
+       Dear {{ user }},
     </h1>
     <p>
-        ثبت نام شما با موفقیت انجام شد
+        you have signed up successfully!
     </p>
-        <a href="{% url 'social:profile' %}">
-            ورود به وبسایت
-        </a>
 {% endblock %}

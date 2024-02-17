@@ -1,6 +1,6 @@
-from django.db.models.signals import m2m_changed, post_delete
+from django.db.models.signals import m2m_changed, post_delete, pre_save
 from django.dispatch import receiver
-from .models import Post
+from .models import Post, User
 from django.core.mail import send_mail
 
 
@@ -16,3 +16,9 @@ def user_post_delete(sender, instance, **kwargs):
     subject = "delete post"
     message = f"your below post has been deleted:\n{instance.description}"
     send_mail(subject, message, 'socialwebproject2024@gmail.com', [author.email], fail_silently=False)
+
+
+@receiver(pre_save, sender=User)
+def user_informations(sender, instance, **kwargs):
+    instance.bio = "recently joined!"
+    
